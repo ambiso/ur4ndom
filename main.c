@@ -7,32 +7,34 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 
-static int ur4ndom_open(struct inode *inode, struct file *file);
-static int ur4ndom_release(struct inode *inode, struct file *file);
-static long ur4ndom_ioctl(struct file *file, unsigned int cmd,
-                          unsigned long arg);
-static ssize_t ur4ndom_read(struct file *file, char __user *buf, size_t count,
-                            loff_t *offset);
-static ssize_t ur4ndom_write(struct file *file, const char __user *buf,
-                             size_t count, loff_t *offset);
+static int ur4ndom_open(struct inode* inode, struct file* file);
 
-static const struct file_operations ur4ndom_fops = {.owner = THIS_MODULE,
-                                                    .open = ur4ndom_open,
-                                                    .release = ur4ndom_release,
-                                                    .unlocked_ioctl =
-                                                        ur4ndom_ioctl,
-                                                    .read = ur4ndom_read,
-                                                    .write = ur4ndom_write};
+static int ur4ndom_release(struct inode* inode, struct file* file);
+
+static long ur4ndom_ioctl(struct file* file, unsigned int cmd, unsigned long arg);
+
+static ssize_t ur4ndom_read(struct file* file, char __user* buf, size_t count, loff_t* offset);
+
+static ssize_t ur4ndom_write(struct file* file, const char __user* buf, size_t count, loff_t* offset);
+
+static const struct file_operations ur4ndom_fops = { 
+    .owner = THIS_MODULE,
+    .open = ur4ndom_open,
+    .release = ur4ndom_release,
+    .unlocked_ioctl = ur4ndom_ioctl,
+    .read = ur4ndom_read,
+    .write = ur4ndom_write 
+};
 
 struct mychar_device_data {
   struct cdev cdev;
 };
 
 static int dev_major = 0;
-static struct class *ur4ndom_class = NULL;
+static struct class* ur4ndom_class = NULL;
 static struct mychar_device_data ur4ndom_data;
 
-static int ur4ndom_uevent(struct device *dev, struct kobj_uevent_env *env) {
+static int ur4ndom_uevent(struct device* dev, struct kobj_uevent_env* env) {
   add_uevent_var(env, "DEVMODE=%#o", 0666);
   return 0;
 }
@@ -68,18 +70,20 @@ static void __exit ur4ndom_exit(void) {
   unregister_chrdev_region(MKDEV(dev_major, 0), MINORMASK);
 }
 
-static int ur4ndom_open(struct inode *inode, struct file *file) { return 0; }
-
-static int ur4ndom_release(struct inode *inode, struct file *file) { return 0; }
-
-static long ur4ndom_ioctl(struct file *file, unsigned int cmd,
-                          unsigned long arg) {
+static int ur4ndom_open(struct inode* inode, struct file* file) {
   return 0;
 }
 
-static ssize_t ur4ndom_read(struct file *file, char __user *buf, size_t count,
-                            loff_t *offset) {
-  uint8_t *data = kmalloc(count, GFP_KERNEL);
+static int ur4ndom_release(struct inode* inode, struct file* file) {
+  return 0;
+}
+
+static long ur4ndom_ioctl(struct file* file, unsigned int cmd, unsigned long arg) {
+  return 0;
+}
+
+static ssize_t ur4ndom_read(struct file* file, char __user* buf, size_t count, loff_t* offset) {
+  uint8_t* data = kmalloc(count, GFP_KERNEL);
   uint64_t i;
 
   for (i = 0; i < count; ++i) {
@@ -95,8 +99,7 @@ static ssize_t ur4ndom_read(struct file *file, char __user *buf, size_t count,
   return count;
 }
 
-static ssize_t ur4ndom_write(struct file *file, const char __user *buf,
-                             size_t count, loff_t *offset) {
+static ssize_t ur4ndom_write(struct file* file, const char __user* buf, size_t count, loff_t* offset) {
   return 0;
 }
 
