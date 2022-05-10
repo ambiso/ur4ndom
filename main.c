@@ -100,7 +100,7 @@ static ssize_t ur4ndom_read(struct file* file, char __user* buf, size_t count, l
 }
 
 static ssize_t ur4ndom_write(struct file* file, const char __user* buf, size_t count, loff_t* offset) {
-  return 0;
+  return count;
 }
 
 MODULE_LICENSE("GPL");
