@@ -1,8 +1,8 @@
 # ur4ndom
 
-Getting [perfect randomness](https://xkcd.com/221/) from your kernel.
+Getting perfect randomness from your kernel.
 
-![xkcd about randomness; a function always returning 4 a number that was chosen by "a fair dice roll"](https://imgs.xkcd.com/comics/random_number.png) 
+[![xkcd about randomness; a function always returning 4 a number that was chosen by "a fair dice roll"](https://imgs.xkcd.com/comics/random_number.png)](https://xkcd.com/221/)
 
 ## Usage
 
